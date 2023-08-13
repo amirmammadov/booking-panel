@@ -39,7 +39,7 @@ const selectedServiceData = JSON.parse(localStorage.getItem("service"));
 function displayServiceItems() {
   let displayItem = services.map((service) => {
     if (selectedServiceData) {
-      isItemSelected = true;
+      isServiceSelected = true;
     }
 
     return `<div id=${service.id} class="main__content__item ${
