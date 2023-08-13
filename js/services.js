@@ -1,6 +1,9 @@
 const servicesContainer = document.querySelector(
   '[data-id="main__content__container"]'
 );
+const nextBtn = document.querySelector("[data-id='next__btn']");
+const prevBtn = document.querySelector("[data-id='prev__btn']");
+const alert = document.querySelector("[data-id='alert']");
 
 const services = [
   {
@@ -26,7 +29,11 @@ const services = [
   },
 ];
 
-let isItemSelected = false;
+let selectedServiceId = null;
+let selectedServiceName = "";
+let selectedServicePrice = null;
+let isServiceSelected = false;
+
 const selectedServiceData = JSON.parse(localStorage.getItem("service"));
 
 function displayServiceItems() {
@@ -65,14 +72,7 @@ function displayServiceItems() {
 
 displayServiceItems();
 
-const items = document.querySelectorAll("[data-id='item']");
-const nextBtn = document.querySelector("[data-id='next__btn']");
-const prevBtn = document.querySelector("[data-id='prev__btn']");
-const alert = document.querySelector("[data-id='alert']");
-
-let serviceId = null;
-let serviceName = "";
-let servicePrice = 0;
+const serviceItems = document.querySelectorAll("[data-id='item']");
 
 function dissappearAlert() {
   setTimeout(() => {
@@ -84,38 +84,53 @@ function switchBetweenPages(href) {
   location.href = href;
 }
 
-items.forEach((item) => {
-  item.addEventListener("click", () => {
-    items.forEach((item) => {
-      item.classList.remove("service--active");
-    });
-
-    localStorage.removeItem("date");
-
-    item.classList.add("service--active");
-    serviceId = Number(item.id);
-
-    services.forEach((serviceItem) => {
-      if (serviceItem.id === serviceId) {
-        serviceName = serviceItem.name;
-        servicePrice = serviceItem.price;
-      }
-    });
-
-    isItemSelected = true;
+function removeAllActiveClasses() {
+  serviceItems.forEach((serviceItem) => {
+    serviceItem.classList.remove("service--active");
   });
-});
+}
+
+function selectServiceItem() {
+  serviceItems.forEach((serviceItem) => {
+    serviceItem.addEventListener("click", () => {
+      removeAllActiveClasses();
+
+      localStorage.removeItem("date");
+
+      serviceItem.classList.add("service--active");
+      selectedServiceId = Number(serviceItem.id);
+
+      services.forEach((serviceItem) => {
+        if (serviceItem.id === selectedServiceId) {
+          selectedServiceName = serviceItem.name;
+          selectedServicePrice = serviceItem.price;
+        }
+      });
+
+      isServiceSelected = true;
+    });
+  });
+}
+selectServiceItem();
+
+function switchNextPage() {
+  const selectedServiceArray = [
+    selectedServiceId,
+    selectedServiceName,
+    selectedServicePrice,
+  ];
+  if (selectedServiceId) {
+    localStorage.setItem("service", JSON.stringify(selectedServiceArray));
+  }
+  switchBetweenPages("../pages/date.html");
+}
 
 nextBtn.addEventListener("click", () => {
-  if (!isItemSelected) {
+  if (!isServiceSelected) {
     alert.style.visibility = "visible";
     dissappearAlert();
   } else {
-    const selectedServiceArray = [serviceId, serviceName, servicePrice];
-    if (serviceId) {
-      localStorage.setItem("service", JSON.stringify(selectedServiceArray));
-    }
-    switchBetweenPages("../pages/date.html");
+    switchNextPage();
   }
 });
 

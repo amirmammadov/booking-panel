@@ -10,7 +10,7 @@ function removeLogDataStorage() {
 }
 removeLogDataStorage();
 
-const itemsContainer = document.querySelector(
+const staffItemsContainer = document.querySelector(
   '[data-id="main__content__container"]'
 );
 const nextBtn = document.querySelector("[data-id='next__btn']");
@@ -33,7 +33,7 @@ const staff = [
 
 let selectedStaffId = null;
 let selectedStaffName = "";
-let isItemSelected = false;
+let isStaffItemSelected = false;
 
 const selectedStaffData = JSON.parse(localStorage.getItem("staff"));
 
@@ -50,7 +50,7 @@ function switchBetweenPages(href) {
 function displayStaffItems() {
   let displayItem = staff.map((person) => {
     if (selectedStaffData) {
-      isItemSelected = true;
+      isStaffItemSelected = true;
     }
 
     return `<div id=${person.id} class="main__content__item ${
@@ -73,23 +73,27 @@ function displayStaffItems() {
   });
 
   displayItem = displayItem.join("");
-  itemsContainer.innerHTML = displayItem;
+  staffItemsContainer.innerHTML = displayItem;
 }
 displayStaffItems();
 
-const items = document.querySelectorAll("[data-id='item']");
+const staffItems = document.querySelectorAll("[data-id='item']");
+
+function removeAllActiveClasses() {
+  staffItems.forEach((item) => {
+    item.classList.remove("staff--active");
+  });
+}
 
 function selectStaffItem() {
-  items.forEach((item) => {
-    item.addEventListener("click", () => {
-      items.forEach((item) => {
-        item.classList.remove("staff--active");
-      });
+  staffItems.forEach((staffItem) => {
+    staffItem.addEventListener("click", () => {
+      removeAllActiveClasses();
 
       localStorage.removeItem("service");
 
-      item.classList.add("staff--active");
-      selectedStaffId = Number(item.id);
+      staffItem.classList.add("staff--active");
+      selectedStaffId = Number(staffItem.id);
 
       staff.forEach((staffItem) => {
         if (staffItem.id === selectedStaffId) {
@@ -97,21 +101,25 @@ function selectStaffItem() {
         }
       });
 
-      isItemSelected = true;
+      isStaffItemSelected = true;
     });
   });
 }
 selectStaffItem();
 
+function switchNextPage() {
+  const selectedStaffArray = [selectedStaffId, selectedStaffName];
+  if (selectedStaffId) {
+    localStorage.setItem("staff", JSON.stringify(selectedStaffArray));
+  }
+  switchBetweenPages("../pages/services.html");
+}
+
 nextBtn.addEventListener("click", () => {
-  if (!isItemSelected) {
+  if (!isStaffItemSelected) {
     alert.style.visibility = "visible";
     dissappearAlert();
   } else {
-    const selectedStaffArray = [selectedStaffId, selectedStaffName];
-    if (selectedStaffId) {
-      localStorage.setItem("staff", JSON.stringify(selectedStaffArray));
-    }
-    switchBetweenPages("../pages/services.html");
+    switchNextPage();
   }
 });
