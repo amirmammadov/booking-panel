@@ -1,0 +1,96 @@
+@import "../base/reset";
+@import "../base/typography";
+@import "../utils/colors";
+@import "../utils/variables";
+@import "../utils/mixins";
+@import "../utils/variables";
+
+.services {
+  .sidebar__item:nth-child(1) {
+    cursor: initial;
+
+    .sidebar__item__order {
+      background-color: $purple;
+    }
+
+    .sidebar__item__text {
+      color: $white;
+    }
+  }
+
+  .sidebar__item:nth-child(2) {
+    cursor: pointer;
+
+    .sidebar__item__order {
+      background-color: $green;
+    }
+
+    .sidebar__item__text {
+      color: $green;
+    }
+  }
+
+  .main__bottom__alert {
+    visibility: hidden;
+  }
+}
+
+.services__container {
+  @include flexbox($direction: column, $justify: space-between, $items: center);
+  width: 82vw;
+  height: 100vh;
+
+  .main__content__item {
+    width: 100%;
+    height: 5em;
+    background-color: $white;
+    @include flexbox($justify: space-between, $items: center);
+    padding: 1em;
+    border: 2px solid $white;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &__left {
+      @include flexbox($justify: flex-start, $items: center, $gap: 1.2em);
+
+      &__img {
+        border-radius: 50%;
+      }
+
+      &__info {
+        @include flexbox(
+          $direction: column,
+          $justify: center,
+          $items: flex-start,
+          $gap: 0.3em
+        );
+
+        &__name {
+          font-size: 1.2em;
+          font-weight: $font-weight;
+          font-style: $font-style;
+        }
+
+        &__time {
+          font-size: 1em;
+          color: $dark4;
+        }
+      }
+    }
+
+    &__right {
+      &__price {
+        font-size: 1.8em;
+        color: $green2;
+        font-weight: $font-weight;
+        font-style: $font-style;
+      }
+    }
+  }
+
+  .main__content__item.service--active {
+    border: $borderStaff;
+  }
+}

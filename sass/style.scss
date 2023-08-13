@@ -1,0 +1,25 @@
+@import "./pages/staff";
+@import "./pages/services";
+@import "./pages/date";
+@import "./pages/details";
+@import "./base/typography";
+@import "./layout/sidebar";
+@import "./utils/mixins";
+@import "./utils/variables";
+
+@import "./components/main-top";
+@import "./components/main-bottom";
+@import "./components/main-content";
+
+html {
+  overflow-x: hidden;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  font-size: 100%;
+}
+
+.main {
+  display: flex;
+}

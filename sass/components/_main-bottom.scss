@@ -1,0 +1,60 @@
+@import "../base/reset";
+@import "../base/typography";
+@import "../utils/colors";
+@import "../utils/variables";
+@import "../utils/mixins";
+@import "../utils/variables";
+
+.main__bottom {
+  width: 100%;
+  height: 5em;
+  background-color: $white;
+  border-top: $border;
+  @include flexbox($justify: space-between, $items: center);
+  padding: 1.5em;
+  position: relative;
+
+  &__next__btn {
+    background-color: $purple;
+    padding: 0.7em 1em;
+    border-radius: 0.1em;
+    border: none;
+    outline: none;
+    color: $white;
+    text-transform: uppercase;
+    position: absolute;
+    top: 1.7em;
+    right: 1.5em;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &__prev__btn {
+    background-color: $white4;
+    padding: 0.7em 1em;
+    border-radius: 0.1em;
+    border: none;
+    outline: none;
+    text-transform: uppercase;
+    color: $dark5;
+    position: absolute;
+    top: 1.7em;
+    left: 1.5em;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &__alert {
+    background-color: $orange;
+    color: $white;
+    @include flexbox($justify: space-between, $items: center, $gap: 0.5em);
+    padding: 0.8em 1.2em;
+    margin: 0 auto;
+    text-transform: uppercase;
+    font-size: 1em;
+  }
+}

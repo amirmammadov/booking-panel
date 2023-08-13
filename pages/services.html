@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Services</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"
+    />
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../sass/pages/_services.scss" />
+    <script src="../js/index.js" defer></script>
+    <script src="../js/services.js" defer></script>
+  </head>
+  <body>
+    <main class="main services">
+      <nav class="sidebar">
+        <div class="sidebar__item">
+          <span class="sidebar__item__order">1</span>
+          <div class="sidebar__item__text">Staff</div>
+        </div>
+        <div class="sidebar__item">
+          <span class="sidebar__item__order">2</span>
+          <div class="sidebar__item__text">Service</div>
+        </div>
+        <div class="sidebar__item">
+          <span class="sidebar__item__order">3</span>
+          <div class="sidebar__item__text">Date & Time</div>
+        </div>
+        <div class="sidebar__item">
+          <span class="sidebar__item__order">4</span>
+          <div class="sidebar__item__text">Confirmation</div>
+        </div>
+      </nav>
+      <div class="services__container">
+        <div class="main__top">
+          <h2 class="main__top__heading">Select service</h2>
+          <button class="main__top__btn">X</button>
+        </div>
+        <div class="main__content" data-id="main__content__container">
+          <div class="main__content__item" data-id="item">
+            <div class="main__content__item__left">
+              <img
+                src="../public/assets/service-1.png"
+                alt="service1"
+                class="main__content__item__left__img"
+              />
+              <div class="main__content__item__left__info">
+                <h2 class="main__content__item__left__info__name">
+                  Oral hygiene
+                </h2>
+                <p class="main__content__item__left__info__time">1 hour</p>
+              </div>
+            </div>
+            <div class="main__content__item__right">
+              <span class="main__content__item__right__price">50$</span>
+            </div>
+          </div>
+          <div class="main__content__item" data-id="item">
+            <div class="main__content__item__left">
+              <img
+                src="../public/assets/service-2.png"
+                alt="service2"
+                class="main__content__item__left__img"
+              />
+              <div class="main__content__item__left__info">
+                <h2 class="main__content__item__left__info__name">Implants</h2>
+                <p class="main__content__item__left__info__time">
+                  1 hour 30 minutes
+                </p>
+              </div>
+            </div>
+            <div class="main__content__item__right">
+              <span class="main__content__item__right__price">120$</span>
+            </div>
+          </div>
+          <div class="main__content__item" data-id="item">
+            <div class="main__content__item__left">
+              <img
+                src="../public/assets/service-3.png"
+                alt="service3"
+                class="main__content__item__left__img"
+              />
+              <div class="main__content__item__left__info">
+                <h2 class="main__content__item__left__info__name">Check up</h2>
+                <p class="main__content__item__left__info__time">
+                  1 hour 12 minutes
+                </p>
+              </div>
+            </div>
+            <div class="main__content__item__right">
+              <span class="main__content__item__right__price">140$</span>
+            </div>
+          </div>
+        </div>
+        <div class="main__bottom">
+          <button class="main__bottom__prev__btn" data-id="prev__btn">
+            Back
+          </button>
+          <div class="main__bottom__alert" data-id="alert">
+            <span class="material-symbols-outlined"> error </span>
+            <p class="main__bottom__alert__text">select service</p>
+          </div>
+          <button class="main__bottom__next__btn" data-id="next__btn">
+            Next
+          </button>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

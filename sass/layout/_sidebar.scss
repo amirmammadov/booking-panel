@@ -1,0 +1,39 @@
+@import "../base/reset";
+@import "../base/typography";
+@import "../utils/colors";
+@import "../utils/variables";
+@import "../utils/mixins";
+@import "../utils/variables";
+
+.sidebar {
+  width: 18vw;
+  height: 100vh;
+  background: $dark;
+  @include flexbox(
+    $direction: column,
+    $justify: flex-start,
+    $items: flex-start,
+    $gap: 1.5em
+  );
+  padding-top: 2em;
+
+  &__item {
+    width: 75%;
+    margin: 0 auto;
+    @include flexbox($justify: flex-start, $items: center, $gap: 1em);
+    color: $white;
+    cursor: not-allowed;
+
+    &__order {
+      background-color: $dark2;
+      padding: 0.4em 0.7em;
+      border-radius: 50%;
+      font-size: 1.1em;
+    }
+
+    &__text {
+      color: $dark3;
+      font-size: 1.1em;
+    }
+  }
+}

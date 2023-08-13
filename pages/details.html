@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Details</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"
+    />
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../sass/pages/_details.scss" />
+    <script src="../js/index.js" defer></script>
+    <script src="../js/details.js" defer></script>
+  </head>
+  <body>
+    <main class="main details">
+      <nav class="sidebar">
+        <div class="sidebar__item">
+          <span class="sidebar__item__order">1</span>
+          <div class="sidebar__item__text">Staff</div>
+        </div>
+        <div class="sidebar__item">
+          <span class="sidebar__item__order">2</span>
+          <div class="sidebar__item__text">Service</div>
+        </div>
+        <div class="sidebar__item">
+          <span class="sidebar__item__order">3</span>
+          <div class="sidebar__item__text">Date & Time</div>
+        </div>
+        <div class="sidebar__item">
+          <span class="sidebar__item__order">4</span>
+          <div class="sidebar__item__text">Confirmation</div>
+        </div>
+      </nav>
+      <div class="details__container">
+        <div class="main__top">
+          <h2 class="main__top__heading">Select service</h2>
+          <button class="main__top__btn">X</button>
+        </div>
+        <div class="main__content">
+          <form class="main__content__form">
+            <div class="main__content__form__line">
+              <div class="main__content__form__line__item">
+                <label for="firstName">First name<span>*</span></label>
+                <input type="text" id="firstName" data-id="detail__input" />
+              </div>
+              <div class="main__content__form__line__item">
+                <label for="lastName">Last name<span>*</span></label>
+                <input type="text" id="lastName" data-id="detail__input" />
+              </div>
+            </div>
+            <div class="main__content__form__line">
+              <div class="main__content__form__line__item">
+                <label for="mail">Email<span>*</span></label>
+                <input type="mail" id="mail" data-id="detail__input" />
+              </div>
+              <div class="main__content__form__line__item">
+                <label for="phone">Phone<span>*</span></label>
+                <input type="tel" id="phone" data-id="detail__input" />
+              </div>
+            </div>
+          </form>
+          <div class="main__content__notes">
+            <div class="main__content__notes__title">Note</div>
+            <div
+              class="main__content__notes__info"
+              data-id="notes__container"
+            ></div>
+          </div>
+        </div>
+        <div class="main__bottom">
+          <button class="main__bottom__prev__btn" data-id="prev__btn">
+            Back
+          </button>
+          <button class="main__bottom__next__btn" data-id="confirm__btn">
+            Confirm Booking
+          </button>
+        </div>
+      </div>
+      <div class="details__ok__modal" data-id="ok__modal">
+        <div class="details__ok__modal__content">
+          <h2 class="details__ok__modal__content__text">
+            Confirmation Successfully completed!
+          </h2>
+          <button
+            class="details__ok__modal__content__closeBtn"
+            data-id="ok__modal__btn"
+          >
+            X
+          </button>
+        </div>
+      </div>
+      <div class="details__error__modal" data-id="error__modal">
+        <div class="details__error__modal__content">
+          <h2 class="details__error__modal__content__text">
+            Please, fill all required fields!
+          </h2>
+          <button
+            class="details__error__modal__content__closeBtn"
+            data-id="error__modal__btn"
+          >
+            X
+          </button>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

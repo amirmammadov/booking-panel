@@ -1,0 +1,206 @@
+@import "../base/reset";
+@import "../base/typography";
+@import "../utils/colors";
+@import "../utils/variables";
+@import "../utils/mixins";
+@import "../utils/variables";
+
+.date {
+  .sidebar__item:nth-child(1) {
+    cursor: initial;
+
+    .sidebar__item__order {
+      background-color: $purple;
+    }
+
+    .sidebar__item__text {
+      color: $white;
+    }
+  }
+
+  .sidebar__item:nth-child(2) {
+    cursor: initial;
+
+    .sidebar__item__order {
+      background-color: $purple;
+    }
+
+    .sidebar__item__text {
+      color: $white;
+    }
+  }
+
+  .sidebar__item:nth-child(3) {
+    cursor: pointer;
+
+    .sidebar__item__order {
+      background-color: $green;
+    }
+
+    .sidebar__item__text {
+      color: $green;
+    }
+  }
+
+  .main__bottom__alert {
+    visibility: hidden;
+  }
+}
+
+.date__container {
+  @include flexbox($direction: column, $justify: space-between, $items: center);
+  width: 82vw;
+  height: 100vh;
+
+  .main__content {
+    @include flexbox($justify: center, $items: baseline, $gap: 2em);
+    padding-top: 5em;
+
+    &__month {
+      width: 30em;
+      height: 27em;
+      background-color: $white2;
+      @include flexbox(
+        $justify: space-between,
+        $items: center,
+        $gap: 1em,
+        $direction: column
+      );
+
+      &__title {
+        @include flexbox($justify: center, $items: center, $gap: 1em);
+
+        &__btn {
+          background-color: $white2;
+          border: none;
+          outline: none;
+          font-size: 1.5em;
+          font-weight: $font-weight;
+          font-style: $font-style;
+
+          &:hover {
+            cursor: pointer;
+          }
+        }
+
+        &__name {
+          font-size: 1em;
+          font-weight: $font-weight;
+          font-style: $font-style;
+        }
+      }
+
+      &__content {
+        background-color: $white;
+        width: 100%;
+        height: 100%;
+        display: grid;
+        grid-template-columns: repeat(7, auto);
+        grid-template-rows: repeat(6, auto);
+        padding: 1em;
+        gap: 0.5em;
+        box-shadow: $box-shadow;
+        align-content: center;
+
+        &__item {
+          width: 3.5em;
+          height: 3.2em;
+          @include flexbox($justify: center, $items: center);
+          background-color: $grey;
+          color: $grey2;
+          cursor: not-allowed;
+        }
+
+        &__item.previous__month {
+          visibility: hidden;
+        }
+
+        &__item.next__month {
+          visibility: hidden;
+        }
+
+        &__item.date--active {
+          cursor: pointer;
+          color: $dark;
+          font-weight: $font-weight;
+        }
+
+        &__item.date--clicked {
+          cursor: pointer;
+          color: $white;
+          background-color: $purple;
+          font-weight: $font-weight;
+        }
+
+        &__week__day {
+          background-color: $white;
+          color: $dark2;
+          width: 3em;
+          height: 2.7em;
+          @include flexbox($justify: center, $items: center);
+        }
+      }
+    }
+
+    &__hour {
+      width: 25em;
+      height: 25em;
+      background-color: $white2;
+      @include flexbox(
+        $justify: space-between,
+        $items: center,
+        $gap: 1em,
+        $direction: column
+      );
+
+      &__title {
+        @include flexbox($justify: center, $items: center);
+        font-size: 1em;
+        font-weight: $font-weight;
+        font-style: $font-style;
+      }
+
+      &__content {
+        width: 100%;
+        height: 100%;
+        background-color: $white;
+        @include flexbox(
+          $justify: flex-start,
+          $items: center,
+          $gap: 1em,
+          $direction: column
+        );
+        padding: 1em;
+
+        &__date {
+          color: $purple;
+          font-size: 1em;
+        }
+
+        &__available {
+          @include flexbox($justify: flex-start, $items: center, $gap: 1em);
+          flex-wrap: wrap;
+
+          &__item {
+            padding: 1em 2em;
+            background-color: $grey3;
+            display: none;
+
+            &:hover {
+              cursor: pointer;
+            }
+          }
+
+          &__item.date__hour--active {
+            display: initial;
+          }
+
+          &__item.date__hour--clicked {
+            color: $white;
+            background-color: $green;
+          }
+        }
+      }
+    }
+  }
+}
