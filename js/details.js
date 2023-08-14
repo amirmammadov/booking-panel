@@ -7,30 +7,46 @@ const okModalBtn = document.querySelector('[data-id="ok__modal__btn"]');
 const errorModalBtn = document.querySelector('[data-id="error__modal__btn"]');
 const notesContainer = document.querySelector('[data-id="notes__container"]');
 
-const firstName = document.querySelector("#firstName");
-const lastName = document.querySelector("#lastName");
-const mail = document.querySelector("#mail");
-const phone = document.querySelector("#phone");
+function getFormElements() {
+  return {
+    firstName: document.querySelector("#firstName"),
+    lastName: document.querySelector("#lastName"),
+    mail: document.querySelector("#mail"),
+    phone: document.querySelector("#phone"),
+  };
+}
 
-const selectedStaffData = JSON.parse(localStorage.getItem("staff"));
-const selectedServiceData = JSON.parse(localStorage.getItem("service"));
-const selectedDateData = JSON.parse(localStorage.getItem("date"));
+function getSavedDataFromStorage(key) {
+  return JSON.parse(localStorage.getItem(key));
+}
+
+function removeAllStorage() {
+  localStorage.removeItem("staff");
+  localStorage.removeItem("service");
+  localStorage.removeItem("date");
+}
+
+const selectedStaffData = getSavedDataFromStorage("staff");
+const selectedServiceData = getSavedDataFromStorage("service");
+const selectedDateData = getSavedDataFromStorage("date");
 
 function switchBetweenPages(href) {
   location.href = href;
 }
 
-function createOutputFile(firstName, lastName, mail, phone) {
+function createOutputData() {
+  const { firstName, lastName, mail, phone } = getFormElements();
+
   const reservationInfo = {
     staff_id: selectedStaffData[0],
     service_id: selectedServiceData[0],
     date: selectedDateData[0],
     time: selectedDateData[1].split("-")[0],
     customer: {
-      name: firstName,
-      surname: lastName,
-      email: mail,
-      phone: phone,
+      name: firstName.value,
+      surname: lastName.value,
+      email: mail.value,
+      phone: phone.value,
     },
   };
 
@@ -67,12 +83,22 @@ function displaySelectedValues() {
 
   notesContainer.innerHTML = displayItem;
 }
-
 displaySelectedValues();
 
-prevBtn.addEventListener("click", () => {
-  switchBetweenPages("../pages/date.html");
-});
+function makeConfirmation() {
+  okModal.style.display = "block";
+
+  createOutputData();
+
+  inputs.forEach((input) => {
+    input.value = "";
+  });
+
+  setTimeout(() => {
+    removeAllStorage();
+    switchBetweenPages("../pages/staff.html");
+  }, 2000);
+}
 
 confirmBtn.addEventListener("click", () => {
   let unfilledInputs = 0;
@@ -84,23 +110,14 @@ confirmBtn.addEventListener("click", () => {
   });
 
   if (unfilledInputs === 0) {
-    okModal.style.display = "block";
-
-    createOutputFile(firstName.value, lastName.value, mail.value, phone.value);
-
-    inputs.forEach((input) => {
-      input.value = "";
-    });
-
-    setTimeout(() => {
-      localStorage.removeItem("staff");
-      localStorage.removeItem("service");
-      localStorage.removeItem("date");
-      switchBetweenPages("../pages/staff.html");
-    }, 2000);
+    makeConfirmation();
   } else {
     errorModal.style.display = "block";
   }
+});
+
+prevBtn.addEventListener("click", () => {
+  switchBetweenPages("../pages/date.html");
 });
 
 errorModalBtn.addEventListener("click", () => {
