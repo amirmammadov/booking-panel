@@ -1,12 +1,30 @@
 const hoursContainer = document.querySelector("[data-id='hours__container']");
 const allDaysConatiner = document.querySelector('[data-id="days__container"]');
-const currentDate = document.querySelector('[data-id="current__date"]');
-
+const currentDateContainer = document.querySelector(
+  '[data-id="current__date"]'
+);
 const calendarBtns = document.querySelectorAll('[data-id="calendar__btn"]');
+const selectedDayForHour = document.querySelector('[data-id="hour__for__day"]');
+const nextBtn = document.querySelector("[data-id='next__btn']");
+const prevBtn = document.querySelector("[data-id='prev__btn']");
+const alert = document.querySelector("[data-id='alert']");
 
-let currDate = new Date();
-let currYear = currDate.getFullYear();
-let currMonth = currDate.getMonth();
+const date = ["2023-08-14", "2023-08-15", "2023-08-16", "2023-08-17"];
+
+const time = [
+  {
+    start_time: "09:00",
+    end_time: "09:30",
+  },
+  {
+    start_time: "09:30",
+    end_time: "10:00",
+  },
+  {
+    start_time: "10:00",
+    end_time: "10:30",
+  },
+];
 
 const months = [
   "January",
@@ -24,6 +42,26 @@ const months = [
 ];
 
 const weeks = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+let isHourSelected = false;
+
+const selectedDateData = JSON.parse(localStorage.getItem("date"));
+
+selectedDateData && selectedDateData[1] && (isHourSelected = true);
+
+let currDate = new Date();
+let currYear = currDate.getFullYear();
+let currMonth = currDate.getMonth();
+
+function dissappearAlert() {
+  setTimeout(() => {
+    alert.style.visibility = "hidden";
+  }, 2000);
+}
+
+function switchBetweenPages(href) {
+  location.href = href;
+}
 
 function renderCalendar() {
   let lastDateOfMonth = new Date(currYear, currMonth + 1, 0).getDate();
@@ -53,56 +91,41 @@ function renderCalendar() {
     }</div>`;
   }
 
-  currentDate.innerText = `${months[currMonth]} ${currYear}`;
+  currentDateContainer.innerText = `${months[currMonth]} ${currYear}`;
   allDaysConatiner.innerHTML = daysForMonth;
 }
-
 renderCalendar();
 
-calendarBtns.forEach((btn) => {
-  btn.addEventListener("click", () => {
-    currMonth =
-      btn.id === "calendar__prev__btn" ? currMonth - 1 : currMonth + 1;
+function makeCalendarSwitchable() {
+  calendarBtns.forEach((calendarBtn) => {
+    calendarBtn.addEventListener("click", () => {
+      currMonth =
+        calendarBtn.id === "calendar__prev__btn"
+          ? currMonth - 1
+          : currMonth + 1;
 
-    if (currMonth < 0 || currMonth > 11) {
-      currDate = new Date(currYear, currMonth);
-      currYear = currDate.getFullYear();
-      currMonth = currDate.getMonth();
-    } else {
-      currDate = new Date();
-    }
+      if (currMonth < 0 || currMonth > 11) {
+        currDate = new Date(currYear, currMonth);
+        currYear = currDate.getFullYear();
+        currMonth = currDate.getMonth();
+      } else {
+        currDate = new Date();
+      }
 
-    renderCalendar();
+      if (currMonth === new Date().getMonth()) {
+        location.reload(true);
+      }
+      renderCalendar();
+    });
   });
-});
-
-const date = ["2023-08-14", "2023-08-15", "2023-08-16", "2023-08-17"];
-
-const time = [
-  {
-    start_time: "09:00",
-    end_time: "09:30",
-  },
-  {
-    start_time: "09:30",
-    end_time: "10:00",
-  },
-  {
-    start_time: "10:00",
-    end_time: "10:30",
-  },
-];
-
-let isHourSelected = false;
-const selectedDateData = JSON.parse(localStorage.getItem("date"));
-
-selectedDateData && selectedDateData[1] && (isHourSelected = true);
+}
+makeCalendarSwitchable();
 
 const allDays = Array.from(
   document.querySelector('[data-id="days__container"]').children
 );
 
-function makeActiveDays() {
+function showActiveDays() {
   const savedDate = selectedDateData && new Date(selectedDateData[0]).getDate();
 
   date.map((dateItem) => {
@@ -120,8 +143,7 @@ function makeActiveDays() {
     });
   });
 }
-
-makeActiveDays();
+showActiveDays();
 
 function displayHours() {
   let displayItem = time.map((hour) => {
@@ -147,26 +169,13 @@ function displayHours() {
   displayItem = displayItem.join("");
   hoursContainer.innerHTML = displayItem;
 }
-
 displayHours();
+
 const monthDays = document.querySelectorAll("[data-id='monthDay']");
 const hours = document.querySelectorAll("[data-id='hour']");
-const nextBtn = document.querySelector("[data-id='next__btn']");
-const prevBtn = document.querySelector("[data-id='prev__btn']");
-const alert = document.querySelector("[data-id='alert']");
 
 let fullDay = (selectedDateData && selectedDateData[0]) || "";
 let fullHour = "";
-
-function dissappearAlert() {
-  setTimeout(() => {
-    alert.style.visibility = "hidden";
-  }, 2000);
-}
-
-function switchBetweenPages(href) {
-  location.href = href;
-}
 
 function showSavedHour() {
   let savedHourValue = selectedDateData && selectedDateData[1].split("-")[0];
@@ -178,65 +187,87 @@ function showSavedHour() {
     }
   });
 }
-
 showSavedHour();
 
-monthDays.forEach((day) => {
-  day.addEventListener("click", () => {
-    monthDays.forEach((day) => {
-      day.classList.remove("date--clicked");
+function showCurrDateForHour(selectedDay) {
+  let editedCurrMonth = currMonth < 10 ? `0${currMonth + 1}` : currMonth + 1;
+  let editedCurrDay = selectedDay < 10 ? `0${selectedDay}` : selectedDay;
 
+  console.log(selectedDateData);
+
+  selectedDayForHour.innerText = `${currYear}-${editedCurrMonth}-${editedCurrDay}`;
+}
+selectedDateData && showCurrDateForHour(selectedDateData[0].split("-")[2]);
+
+function makeMonthDaysClickable() {
+  monthDays.forEach((day) => {
+    day.addEventListener("click", () => {
+      monthDays.forEach((day) => {
+        day.classList.remove("date--clicked");
+
+        hours.forEach((hour) => {
+          hour.classList.remove("date__hour--clicked");
+        });
+      });
+
+      day.classList.add("date--clicked");
+
+      isHourSelected = false;
+
+      let selectedDay = Number(day.firstChild.nodeValue);
+
+      date.map((dateItem) => {
+        const availableDay = new Date(dateItem).getDate();
+        if (availableDay === selectedDay) {
+          showCurrDateForHour(selectedDay);
+          fullDay = dateItem;
+        }
+      });
+
+      hours.forEach((hour) => {
+        hour.classList.add("date__hour--active");
+      });
+
+      isMonthSelected = true;
+    });
+  });
+}
+makeMonthDaysClickable();
+
+function makeHoursClickable() {
+  hours.forEach((hour) => {
+    hour.addEventListener("click", () => {
       hours.forEach((hour) => {
         hour.classList.remove("date__hour--clicked");
       });
+
+      hour.classList.add("date__hour--clicked");
+
+      let startHour = hour.children[0].firstChild.nodeValue.trim();
+      let endHour = hour.children[1].firstChild.nodeValue.trim();
+
+      fullHour = startHour + "-" + endHour;
+
+      isHourSelected = true;
     });
-
-    day.classList.add("date--clicked");
-
-    let selectedDay = Number(day.firstChild.nodeValue);
-
-    date.map((dateItem) => {
-      const availableDay = new Date(dateItem).getDate();
-      if (availableDay === selectedDay) {
-        fullDay = dateItem;
-      }
-    });
-
-    hours.forEach((hour) => {
-      hour.classList.add("date__hour--active");
-    });
-
-    isMonthSelected = true;
   });
-});
+}
+makeHoursClickable();
 
-hours.forEach((hour) => {
-  hour.addEventListener("click", () => {
-    hours.forEach((hour) => {
-      hour.classList.remove("date__hour--clicked");
-    });
-
-    hour.classList.add("date__hour--clicked");
-
-    let startHour = hour.children[0].firstChild.nodeValue.trim();
-    let endHour = hour.children[1].firstChild.nodeValue.trim();
-
-    fullHour = startHour + "-" + endHour;
-
-    isHourSelected = true;
-  });
-});
+function switchNextPage() {
+  const selectedDateArray = [fullDay, fullHour];
+  if (fullHour) {
+    localStorage.setItem("date", JSON.stringify(selectedDateArray));
+  }
+  switchBetweenPages("../pages/details.html");
+}
 
 nextBtn.addEventListener("click", () => {
   if (!isHourSelected) {
     alert.style.visibility = "visible";
     dissappearAlert();
   } else {
-    const selectedDateArray = [fullDay, fullHour];
-    if (fullHour) {
-      localStorage.setItem("date", JSON.stringify(selectedDateArray));
-    }
-    switchBetweenPages("../pages/details.html");
+    switchNextPage();
   }
 });
 

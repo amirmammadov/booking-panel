@@ -174,7 +174,9 @@
 
         &__date {
           color: $purple;
-          font-size: 1em;
+          font-size: 1.1em;
+          height: 2.5em;
+          @include flexbox($justify: center, $items: center);
         }
 
         &__available {
