@@ -1,9 +1,10 @@
-const servicesContainer = document.querySelector(
-  '[data-id="main__content__container"]'
-);
-const nextBtn = document.querySelector("[data-id='next__btn']");
-const prevBtn = document.querySelector("[data-id='prev__btn']");
-const alert = document.querySelector("[data-id='alert']");
+const getElement = (selector) => document.querySelector(selector);
+const getElements = (selector) => document.querySelectorAll(selector);
+
+const servicesContainer = getElement('[data-id="main__content__container"]');
+const nextBtn = getElement("[data-id='next__btn']");
+const prevBtn = getElement("[data-id='prev__btn']");
+const alertElement = getElement("[data-id='alert']");
 
 const services = [
   {
@@ -36,47 +37,50 @@ let isServiceSelected = false;
 
 const selectedServiceData = JSON.parse(localStorage.getItem("service"));
 
-function displayServiceItems() {
-  let displayItem = services.map((service) => {
-    if (selectedServiceData) {
-      isServiceSelected = true;
-    }
+function renderServiceItem(service) {
+  const isActive = selectedServiceData && selectedServiceData[0] === service.id;
+  const activeClass = isActive ? "service--active" : "";
 
-    return `<div id=${service.id} class="main__content__item ${
-      selectedServiceData
-        ? selectedServiceData[0] === service.id && "service--active"
-        : ""
-    }" data-id="item">
-    <div class="main__content__item__left">
-      <img
-        src=../public/assets/${service.image}
-        alt=${service.name}
-        class="main__content__item__left__img"
-      />
-      <div class="main__content__item__left__info">
-        <h2 class="main__content__item__left__info__name">
-          ${service.name}
-        </h2>
-        <p class="main__content__item__left__info__time">${service.duration}</p>
+  return `
+    <div
+      id=${service.id}
+      class="main__content__item ${activeClass}"
+      data-id="item"
+    >
+      <div class="main__content__item__left">
+        <img
+          src=../public/assets/${service.image}
+          alt=${service.name}
+          class="main__content__item__left__img"
+        />
+        <div class="main__content__item__left__info">
+          <h2 class="main__content__item__left__info__name">
+            ${service.name}
+          </h2>
+          <p class="main__content__item__left__info__time">${service.duration}</p>
+        </div>
+      </div>
+      <div class="main__content__item__right">
+        <span class="main__content__item__right__price">${service.price}$</span>
       </div>
     </div>
-    <div class="main__content__item__right">
-      <span class="main__content__item__right__price">${service.price}$</span>
-    </div>
-  </div>`;
-  });
-
-  displayItem = displayItem.join("");
-  servicesContainer.innerHTML = displayItem;
+  `;
 }
 
+function displayServiceItems() {
+  if (selectedServiceData) {
+    isServiceSelected = true;
+  }
+  const displayItems = services.map(renderServiceItem).join("");
+  servicesContainer.innerHTML = displayItems;
+}
 displayServiceItems();
 
-const serviceItems = document.querySelectorAll("[data-id='item']");
+const serviceItems = getElements("[data-id='item']");
 
 function dissappearAlert() {
   setTimeout(() => {
-    alert.style.visibility = "hidden";
+    alertElement.style.visibility = "hidden";
   }, 2000);
 }
 
@@ -127,7 +131,7 @@ function switchNextPage() {
 
 nextBtn.addEventListener("click", () => {
   if (!isServiceSelected) {
-    alert.style.visibility = "visible";
+    alertElement.style.visibility = "visible";
     dissappearAlert();
   } else {
     switchNextPage();

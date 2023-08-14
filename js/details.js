@@ -1,11 +1,14 @@
-const inputs = document.querySelectorAll('[data-id="detail__input"]');
-const prevBtn = document.querySelector("[data-id='prev__btn']");
-const confirmBtn = document.querySelector("[data-id='confirm__btn']");
-const okModal = document.querySelector('[data-id="ok__modal"]');
-const errorModal = document.querySelector('[data-id="error__modal"]');
-const okModalBtn = document.querySelector('[data-id="ok__modal__btn"]');
-const errorModalBtn = document.querySelector('[data-id="error__modal__btn"]');
-const notesContainer = document.querySelector('[data-id="notes__container"]');
+const getElement = (selector) => document.querySelector(selector);
+const getElements = (selector) => document.querySelectorAll(selector);
+
+const inputs = getElements('[data-id="detail__input"]');
+const prevBtn = getElement("[data-id='prev__btn']");
+const confirmBtn = getElement("[data-id='confirm__btn']");
+const okModal = getElement('[data-id="ok__modal"]');
+const errorModal = getElement('[data-id="error__modal"]');
+const okModalBtn = getElement('[data-id="ok__modal__btn"]');
+const errorModalBtn = getElement('[data-id="error__modal__btn"]');
+const notesContainer = getElement('[data-id="notes__container"]');
 
 function getFormElements() {
   return {

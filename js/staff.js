@@ -10,11 +10,12 @@ function removeLogDataStorage() {
 }
 removeLogDataStorage();
 
-const staffItemsContainer = document.querySelector(
-  '[data-id="main__content__container"]'
-);
-const nextBtn = document.querySelector("[data-id='next__btn']");
-const alert = document.querySelector("[data-id='alert']");
+const getElement = (selector) => document.querySelector(selector);
+const getElements = (selector) => document.querySelectorAll(selector);
+
+const staffItemsContainer = getElement('[data-id="main__content__container"]');
+const nextBtn = getElement("[data-id='next__btn']");
+const alert = getElement("[data-id='alert']");
 
 const staff = [
   {
@@ -47,37 +48,35 @@ function switchBetweenPages(href) {
   location.href = href;
 }
 
+function renderStaffItem(staff) {
+  const isActive = selectedStaffData && selectedStaffData[0] === staff.id;
+  const activeClass = isActive ? "staff--active" : "";
+
+  return `<div id=${staff.id} class="main__content__item ${activeClass}" data-id="item">
+    <img
+      src=../public/assets/${staff.image}
+      alt=${staff.name}
+      class="main__content__item__img"
+    />
+    <div class="main__content__item__info">
+      <h2 class="main__content__item__info__name">${staff.name}</h2>
+      <p class="main__content__item__info__mail">
+      ${staff.email}
+      </p>
+    </div>
+  </div>`;
+}
+
 function displayStaffItems() {
-  let displayItem = staff.map((person) => {
-    if (selectedStaffData) {
-      isStaffItemSelected = true;
-    }
-
-    return `<div id=${person.id} class="main__content__item ${
-      selectedStaffData
-        ? selectedStaffData[0] === person.id && "staff--active"
-        : ""
-    }" data-id="item">
-      <img
-        src=../public/assets/${person.image}
-        alt=${person.name}
-        class="main__content__item__img"
-      />
-      <div class="main__content__item__info">
-        <h2 class="main__content__item__info__name">${person.name}</h2>
-        <p class="main__content__item__info__mail">
-        ${person.email}
-        </p>
-      </div>
-    </div>`;
-  });
-
-  displayItem = displayItem.join("");
-  staffItemsContainer.innerHTML = displayItem;
+  if (selectedStaffData) {
+    isStaffItemSelected = true;
+  }
+  const displayItems = staff.map(renderStaffItem).join("");
+  staffItemsContainer.innerHTML = displayItems;
 }
 displayStaffItems();
 
-const staffItems = document.querySelectorAll("[data-id='item']");
+const staffItems = getElements("[data-id='item']");
 
 function removeAllActiveClasses() {
   staffItems.forEach((item) => {

@@ -1,13 +1,14 @@
-const hoursContainer = document.querySelector("[data-id='hours__container']");
-const allDaysConatiner = document.querySelector('[data-id="days__container"]');
-const currentDateContainer = document.querySelector(
-  '[data-id="current__date"]'
-);
-const calendarBtns = document.querySelectorAll('[data-id="calendar__btn"]');
-const selectedDayForHour = document.querySelector('[data-id="hour__for__day"]');
-const nextBtn = document.querySelector("[data-id='next__btn']");
-const prevBtn = document.querySelector("[data-id='prev__btn']");
-const alert = document.querySelector("[data-id='alert']");
+const getElement = (selector) => document.querySelector(selector);
+const getElements = (selector) => document.querySelectorAll(selector);
+
+const hoursContainer = getElement("[data-id='hours__container']");
+const allDaysConatiner = getElement('[data-id="days__container"]');
+const currentDateContainer = getElement('[data-id="current__date"]');
+const calendarBtns = getElements('[data-id="calendar__btn"]');
+const selectedDayForHour = getElement('[data-id="hour__for__day"]');
+const nextBtn = getElement("[data-id='next__btn']");
+const prevBtn = getElement("[data-id='prev__btn']");
+const alert = getElement("[data-id='alert']");
 
 const date = ["2023-08-14", "2023-08-15", "2023-08-16", "2023-08-17"];
 
@@ -121,9 +122,7 @@ function makeCalendarSwitchable() {
 }
 makeCalendarSwitchable();
 
-const allDays = Array.from(
-  document.querySelector('[data-id="days__container"]').children
-);
+const allDays = Array.from(getElement('[data-id="days__container"]').children);
 
 function showActiveDays() {
   const savedDate = selectedDateData && new Date(selectedDateData[0]).getDate();
@@ -171,8 +170,8 @@ function displayHours() {
 }
 displayHours();
 
-const monthDays = document.querySelectorAll("[data-id='monthDay']");
-const hours = document.querySelectorAll("[data-id='hour']");
+const monthDays = getElements("[data-id='monthDay']");
+const hours = getElements("[data-id='hour']");
 
 let fullDay = (selectedDateData && selectedDateData[0]) || "";
 let fullHour = "";
